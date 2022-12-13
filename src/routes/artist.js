@@ -1,5 +1,5 @@
 const artistRoute = (req, res) => {
-  res.sendStatus(201);
+  res.status(201).send(req.body);
 };
 
 module.exports = artistRoute;
