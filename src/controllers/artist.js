@@ -1,15 +1,16 @@
 const express = require('express');
-const { createArtistRoute, findArtistRoute, findArtistByIdRoute, updateArtistRouter } = require('../routes/artist');
+const { createArtistRoute, findArtistRoute, findArtistByIdRoute, updateArtistRoute, deleteArtistRoute } = require('../routes/artist');
 
 const artistRouter = express.Router();
 
 
 artistRouter.route('/')
 .post(createArtistRoute)
-.get(findArtistRoute)
+.get(findArtistRoute);
 
-artistRouter.get('/:id', findArtistByIdRoute);
-
-artistRouter.patch('/:id', updateArtistRouter);
+artistRouter.route('/:id')
+.get(findArtistByIdRoute)
+.patch(updateArtistRoute)
+.delete(deleteArtistRoute);
 
 module.exports = artistRouter;

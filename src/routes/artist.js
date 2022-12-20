@@ -38,7 +38,7 @@ const findArtistByIdRoute = async(req, res) => {
   }
 };
 
-const updateArtistRouter = async(req, res) => {
+const updateArtistRoute = async(req, res) => {
   const { id } = req.params
   const { name, genre } = req.body
   
@@ -59,15 +59,32 @@ const updateArtistRouter = async(req, res) => {
 
     const { rows: [ artist ] } = await db.query(statement, inputs)
 
-    if (!artist) {
-      return res.status(404).json({ message: `artist ${id} does not exist` })
+    if (artist) {
+      res.status(200).json(artist)
     }
 
-    res.status(200).json(artist)
+    return res.status(404).json({ message: `artist ${id} does not exist` })
   } catch (err) {
     console.log(err)
     res.status(500).json(err.message)
   }
 };
 
-module.exports = { createArtistRoute, findArtistRoute, findArtistByIdRoute, updateArtistRouter };
+
+const deleteArtistRoute = async(req, res) => {
+  const { id } = req.params;
+  try {
+  const { rows: [ artist ] } = await db.query(`DELETE FROM Artists WHERE id = '${id}' RETURNING *`);
+
+    if (artist) {
+      res.status(200).json(artist);
+    } else {
+      res.status(404).json({ message: `artist ${id} does not exist` });
+    }
+  
+  } catch (err) {
+    res.send(500).json(err.message)
+  }
+};
+
+module.exports = { createArtistRoute, findArtistRoute, findArtistByIdRoute, updateArtistRoute, deleteArtistRoute };
