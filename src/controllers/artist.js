@@ -1,5 +1,5 @@
 const express = require('express');
-const { createArtistRoute, findArtistRoute, findArtistByIdRoute }= require('../routes/artist');
+const { createArtistRoute, findArtistRoute, findArtistByIdRoute, updateArtistRouter } = require('../routes/artist');
 
 const artistRouter = express.Router();
 
@@ -9,5 +9,7 @@ artistRouter.route('/')
 .get(findArtistRoute)
 
 artistRouter.get('/:id', findArtistByIdRoute);
+
+artistRouter.patch('/:id', updateArtistRouter);
 
 module.exports = artistRouter;

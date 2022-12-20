@@ -1,7 +1,7 @@
 const db = require('../db/index');
 
 const createArtistRoute = async (req, res) => {
-    const { name, genre } = req.body
+    const { name, genre } = req.body;
     console.log("hello");
     try {
       const { rows: [ artist ] } = await db.query(`INSERT INTO Artists (name, genre) VALUES ($1, $2) RETURNING *`, [name, genre])
@@ -22,7 +22,7 @@ const findArtistRoute = async (_req, res) => {
 };
 
 const findArtistByIdRoute = async(req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
   try {
   const { rows } = await db.query(`SELECT * FROM Artists WHERE id = '${id}'`);
   console.log(rows);
@@ -38,4 +38,36 @@ const findArtistByIdRoute = async(req, res) => {
   }
 };
 
-module.exports = { createArtistRoute, findArtistRoute, findArtistByIdRoute };
+const updateArtistRouter = async(req, res) => {
+  const { id } = req.params
+  const { name, genre } = req.body
+  
+  let statement, inputs;
+  
+  if (name && genre) {
+      statement = `UPDATE Artists SET name = $1, genre = $2 WHERE id = $3 RETURNING *`
+      inputs = [name, genre, id]
+  } else if (name) {
+      statement = `UPDATE Artists SET name = $1 WHERE id = $2 RETURNING *`
+      inputs = [name, id]
+  } else if (genre) {
+      statement = `UPDATE Artists SET genre = $1 WHERE id = $2 RETURNING *`
+      inputs = [genre, id]
+  }
+
+  try {
+
+    const { rows: [ artist ] } = await db.query(statement, inputs)
+
+    if (!artist) {
+      return res.status(404).json({ message: `artist ${id} does not exist` })
+    }
+
+    res.status(200).json(artist)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err.message)
+  }
+};
+
+module.exports = { createArtistRoute, findArtistRoute, findArtistByIdRoute, updateArtistRouter };
