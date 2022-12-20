@@ -1,8 +1,13 @@
 const express = require('express');
-const artistRoute = require('../routes/artist');
+const { createArtistRoute, findArtistRoute, findArtistByIdRoute }= require('../routes/artist');
 
 const artistRouter = express.Router();
 
-artistRouter.post('/', artistRoute)
+
+artistRouter.route('/')
+.post(createArtistRoute)
+.get(findArtistRoute)
+
+artistRouter.get('/:id', findArtistByIdRoute);
 
 module.exports = artistRouter;

@@ -7,8 +7,8 @@ app.use(express.json());
 
 app.use('/artists', artistRouter)
 
-app.get('/', (req, res) => {
-  res.status(200).send("Hello world!");
-});
+// app.get('/', (req, res) => {
+//   res.status(200).send("Hello world!");
+// });
 
 module.exports = app;
