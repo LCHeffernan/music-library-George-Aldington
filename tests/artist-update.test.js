@@ -21,6 +21,11 @@ describe('Update Artist', () => {
       expect(status).to.equal(200)
 
       expect(body).to.deep.equal({ id: artist.id, name: 'something different', genre: 'rock' })
+      const { rows: [ artistData ] } = await db.query(
+        `SELECT * FROM Artists WHERE id = ${body.id}`
+      )
+      expect(artistData.name).to.equal('something different')
+      expect(artistData.genre).to.equal('rock')
     })
 
     it('returns a 404 if the artist does not exist', async () => {
