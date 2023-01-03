@@ -22,7 +22,6 @@ describe('create album', () => {
         const { status, body } = await request(app).post(`/artists/${artist.id}/albums`).send({
           name: 'Happier Than Ever',
           year: 2021,
-          // artist_id: `${artist.id}`
         })
 
         expect(status).to.equal(201)
