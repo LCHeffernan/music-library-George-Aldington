@@ -1,4 +1,4 @@
-const db = require('../db');
+const db = require('../db/index');
 
 const createAlbum = async (req, res) => {
   const { id } = req.params;
@@ -15,4 +15,31 @@ const createAlbum = async (req, res) => {
   }
 };
 
-module.exports = createAlbum;
+const readAlbum = async (req, res) => {
+  try {
+        const { rows } = await db.query(
+    `SELECT * FROM Albums`
+  );
+  console.log(rows);
+  res.status(200).json(rows);
+} catch (err) {
+    res.status(500).json(err.message);
+  }
+};
+
+const readAlbumById = async (req, res) => {
+  const { id } = req.params;
+  try {
+      const { rows: [Album] } = await db.query(`SELECT * FROM Albums WHERE id = $1`, [id]);
+      
+      if (!Album) {
+        res.status(404).json({ message: `Album ${id} does not exist` });
+      } else {
+        res.status(200).json(Album);
+      }
+    } catch (err) {
+    res.status(500).json(err.message);
+  }
+}
+
+module.exports =  { createAlbum, readAlbum, readAlbumById };

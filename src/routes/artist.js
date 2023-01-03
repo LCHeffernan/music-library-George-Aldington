@@ -1,9 +1,8 @@
 const express = require('express');
 const { createArtist, findArtist, findArtistById, updateArtist, deleteArtist } = require('../controllers/artist');
-const createAlbum = require('../controllers/album');
+const { createAlbum }= require('../controllers/album');
 
 const artistRouter = express.Router();
-
 
 artistRouter.route('/')
 .post(createArtist)
