@@ -1,5 +1,18 @@
-<h1>George's Music Library Project</h1>
+# George's Music Library Project
 
-<h2>Description</h2>
-<p>In this project, I will be learning how to use PostgreSQL, Docker, pgAdmin4 alongside Express.js to create an API for a music library.</p>
+## Description
+In this project, I will be learning how to use PostgreSQL, Docker, pgAdmin4 alongside Express.js to create an API that allows for CRUD interactions with a PostgreSQL databse.
+
+Using TDD, I have created an API that allows a user to add artists and albums to a music library database. The user could then search for items in the library, edit the details, and delete items from the library.
+
+## Download Instructions
+- Fork this repo
+```bash 
+git clone https://github.com/George-xixi/music-library
+
+npm install
+```
+
+
+
 
