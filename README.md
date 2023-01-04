@@ -7,9 +7,10 @@ Using TDD, I have created an API that allows a user to add artists and albums to
 
 ## Download Instructions
 - Fork this repo
-```bash 
+```
 git clone https://github.com/George-xixi/music-library
-
+```
+```
 npm install
 ```
 
